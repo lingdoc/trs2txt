@@ -13,7 +13,7 @@ trs2txt.cfg (the configuration file for the executable and python script)
 trs2txt.exe (the executable script file)
 trs2txt.py (the Python script from which the executable is built)
 
-The script is designed for making Toolbox .txt files from Transcriber 1.5.1 .trs files (http://sourceforge.net/projects/trans/files/transcriber/1.5.1/) to allow users to play segments of long sound files from within Toolbox (http://www-01.sil.org/computing/toolbox/). It uses the 'trs2txt.cfg' file to determine the markers in your Toolbox files. Edit the 'trs2txt.cfg' file in a standard Text Editor, and replace the following markers with those that refer to the same fields in your own Toolbox texts:
+The script is inspired by Andrew Margetts' online converter (http://linguisticsoftwareconverters.zong.mine.nu/) and is designed for making Toolbox .txt files (http://www-01.sil.org/computing/toolbox/) from Transcriber 1.5.1 .trs files (http://sourceforge.net/projects/trans/files/transcriber/1.5.1/) to allow users to play segments of long sound files from within Toolbox. It uses the 'trs2txt.cfg' file to determine the markers in your Toolbox files. Edit the 'trs2txt.cfg' file in a standard Text Editor, and replace the following markers with those that refer to the same fields in your own Toolbox texts:
  \ref (line name and number)
  \ELANBegin (timecode beginning)
  \ELANEnd (timecode ending)
