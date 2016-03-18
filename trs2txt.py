@@ -114,29 +114,8 @@ for infile in filenames: # create a 'for' loop to iterate through all the .txt f
         except:
             pass
 
-    blue = len(timecodes)
-    # count = 0
-
     for line in timecodes: # for each of the time-coded segments identified in the 'timecodes' list, do the following
-        # count += 1
-
-        # if blue != count+1:
-        #     # print blue
-        #     print count
-        #     print timecodes[count]
-        #     print len(lines)
-        #     print ver
-        #     print lines[count]
-        #     count += 1
-        # elif blue == count+1:
-        #     print count
-        #     print timecodes[count]
-        #     print len(lines)
-        #     print ver
-        #     print lines[count]
-            # print timecodes[blue]
-
-        if blue != count+1: # if the counter number doesn't correspond to the number of the last timecode
+        if len(timecodes) != count+1: # if the counter number doesn't correspond to the number of the last timecode
             textfile.write(ref+audioname+'_'+str(count+1).zfill(3)+'\n') # write the 'ref' string and the modified file name
             textfile.write(tbeg+str(timecodes[count])+'\n') # write the 'tbeg' string and the first timecode
             textfile.write(tend+str(timecodes[count+1])+'\n') # write the 'tend' string and the second timecode
@@ -145,7 +124,7 @@ for infile in filenames: # create a 'for' loop to iterate through all the .txt f
             textfile.write(str(ver)+str(lines[count])) # write the 'ver' string and the corresponding line of text
             textfile.write(trans+'\n\n') # write the 'trans' line - this line will always be empty. If you have a corresponding free translation, you can copy it here in Toolbox
             count += 1 # advance the counter by 1
-        elif blue == count+1: # if the counter number corresponds to the number of the last timecode
+        elif len(timecodes) == count+1: # if the counter number corresponds to the number of the last timecode
             textfile.write(ref+audioname+'_'+str(count+1).zfill(3)+'\n') # write the 'ref' string and the modified file name
             textfile.write(tbeg+str(timecodes[count])+'\n') # write the 'tbeg' string and the first timecode
             textfile.write(tend+str(complete)+'\n') # write the 'tend' string and the second timecode
