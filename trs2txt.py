@@ -6,15 +6,14 @@
 import glob
 import datetime
 import re
+import os.path
 import io
-
-config = io.open('trs2txt.cfg', 'r') # open the config file located in the same directory
 
 ref = '' # create a blank string to store the 'ref' tag from the config file for processing
 tbeg = '' # create a blank string to store the 'tbeg' tag from the config file for processing
 tend = '' # create a blank string to store the 'tend' tag from the config file for processing
-tpart = '\ELANParticipant ' # create a string to store the 'tpart' tag for processing
-sound = '\sound ' # create a string to store the 'sound' tag for processing
+tpart = '\\ELANParticipant ' # create a string to store the 'tpart' tag for processing
+sound = '\\sound ' # create a string to store the 'sound' tag for processing
 audiostart = 'audio_filename="' # this string identifies the audio file in Transcriber
 audioend = '" version="' # this string identifies the end of the audio file name
 syncbeg = '<Sync time="' # this string identifies the beginning of each time-alignment
@@ -31,17 +30,42 @@ endings = '"' # this string identifies the end of a timecode
 ver = '' # create a blank string to store the 'text' tag from the config file for processing
 trans = '' # create a blank string to store the 'trans' tag from the config file for processing
 
-for line in config: # read all the lines and look for the correct tags
-    if line[0:18] == 'reference number: ': # read the reference number tag
-        ref += line[18:-1]+' ' # append it to the 'ref' string
-    if line[0:20] == 'timecode beginning: ': # read the tag that identifies the beginning of a timecode
-        tbeg += line[20:-1]+' ' # append it to the 'tbeg' string
-    if line[0:17] == 'timecode ending: ': # read the tag that identifies the end of a timecode
-        tend += line[17:-1]+' ' # append it to the 'tend' string
-    if line[0:29] == 'text for language subtitles: ': # read the tag that identifies the subtitles in the vernacular language
-        ver += line[29:-1]+' ' # append it to the 'text' string
-    if line[0:22] == 'text for translation: ': # read the tag that identifies the translation subtitles
-        trans += line[22:-1]+' ' # append it to the 'trans' string
+configlist = []
+
+if os.path.isfile("CONFIG"):
+    config = io.open('CONFIG', 'r') # open the config file located in the same directory (io.open)
+    for line in config:
+        configlist = line.split()
+        ref = str(configlist[0]) + ' '
+        tbeg = str(configlist[1]) + ' '
+        tend = str(configlist[2]) + ' '
+        # tpart = str(configlist[3])
+        ver = str(configlist[3]) + ' '
+        trans = str(configlist[4]) + ' '
+    config.close()
+else:
+    print "There is no configuration file. You must add new tags.\n"
+    ref = '\\' + raw_input("What is the reference number? (often 'ref') > ")
+    tbeg = '\\' + raw_input("What marks the beginning of your timecodes? (often 'ELANBegin') > ")
+    tend = '\\' + raw_input("What marks the end of your timecodes? (often 'ELANEnd') > ")
+    # tpart = '\\' + raw_input("How do you want your participants marked? (often 'ELANParticipant') > ")
+    ver = '\\' + raw_input("What marks a string of vernacular text? (often 'tx') > ")
+    trans = '\\' + raw_input("What marks your free translation? (often 'ft') > ")
+    config = open('CONFIG', 'w')
+    config.write(ref + ' ' + tbeg + ' ' + tend + ' ' + tpart + ' ' + ver + ' ' + trans + ' ')
+    config.close()
+
+# for line in config: # read all the lines and look for the correct tags
+#     if line[0:18] == 'reference number: ': # read the reference number tag
+#         ref += line[18:-1]+' ' # append it to the 'ref' string
+#     if line[0:20] == 'timecode beginning: ': # read the tag that identifies the beginning of a timecode
+#         tbeg += line[20:-1]+' ' # append it to the 'tbeg' string
+#     if line[0:17] == 'timecode ending: ': # read the tag that identifies the end of a timecode
+#         tend += line[17:-1]+' ' # append it to the 'tend' string
+#     if line[0:29] == 'text for language subtitles: ': # read the tag that identifies the subtitles in the vernacular language
+#         ver += line[29:-1]+' ' # append it to the 'text' string
+#     if line[0:22] == 'text for translation: ': # read the tag that identifies the translation subtitles
+#         trans += line[22:-1]+' ' # append it to the 'trans' string
 
 filenames = [] # create an empty list called 'filenames' to keep track of the .txt files in the directory
 
