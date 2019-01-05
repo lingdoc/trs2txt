@@ -1,11 +1,11 @@
 ### README for `trs2txt` python script and executable
-Version 1.2
-CC by 4.0 Hiram Ring, 2015-2018, www.hiramring.com, hiram1@e.ntu.edu.sg
+Version 1.3
+CC by 4.0 Hiram Ring, 2015-2019, www.hiramring.com, hiram1@e.ntu.edu.sg
 http://creativecommons.org/licenses/by/4.0/
 
 Freely available for use, distribution, and modification
 
-This README.txt file is intended to be copied along with the `trs2txt` python script and executable file.
+This README file is intended to be copied along with the `trs2txt` python script and executable file.
 
 This folder contains the following files:
 
@@ -15,9 +15,17 @@ This folder contains the following files:
 * `trs2txt.exe` (the executable script file)
 * `trs2txt.py` (the Python script from which the executable is built)
 
-*** CHANGES SINCE 1.1 ***
+*** CHANGES to version 1.3 ***
 
-The `trs2txt.cfg` file is deprecated in favor of a program-internal creation of the configuration file. This allows users to input necessary markers for each field the first time they run the converter in a new folder. To reset the configuration, simply delete the `CONFIG` file that the converter creates.
+- Overlapping speakers in Transcriber files resulted in incorrect labeling in Toolbox files. The new version creates a separate line for each speaker in the Toolbox file, along with the correct overlap in timecodes. Up to 5 overlapping speakers are currently supported.
+- If names of speakers are provided, these names are used in the participant field instead of Transcriber's generic labels.
+- Misplaced carriage returns would result in incorrect assignment of transcribed speech. The new version re-writes TRS files to fix this.
+- Updated repo to include the EXE.
+
+*** CHANGES to version 1.2 ***
+
+- The `trs2txt.cfg` file is deprecated in favor of a program-internal creation of the configuration file. This allows users to input necessary markers for each field the first time they run the converter in a new folder. To reset the configuration, simply delete the `CONFIG` file that the converter creates.
+- Updated repo to include the PDF.
 
 ### About
 
@@ -28,7 +36,7 @@ The script is inspired by Andrew Margetts' online converter (http://linguisticso
  * `\t` (vernacular text - Toolbox default is `\tx`)
  * `\f` (free translation - Toolbox default is `\ft`)
 
-These markers should also correspond to the descriptions in the `ELAN.typ` file (a sample file is included in the `.zip`). The `ELAN.typ` file should be placed in your Toolbox project settings folder. Other markers and information that will be added are the linked sound file and participant turn information. Participant turn information will only be populated if such information is available in your Transcriber file. Otherwise this entry will be left blank - you can add this information manually in Toolbox. This information is used by ELAN to import Toolbox interlinear texts.
+These markers should also correspond to the descriptions in the `ELAN.typ` file included in this repository. The `ELAN.typ` file should be placed in your Toolbox project settings folder. Other markers and information that will be added are the linked sound file and participant turn information. Participant turn information will only be populated if such information is available in your Transcriber file. Otherwise this entry will be left blank - you can add this information manually in Toolbox. This information is used by ELAN to import Toolbox interlinear texts.
 
 To use the script, run it in a directory that contains your Transcriber `.trs` files. The script/executable will create a corresponding `.txt` file for each `.trs` file in the directory, using the configuration file as a guide. Existing .txt files will be overwritten. To import the texts into Toolbox you can open each text file in a text editor, copy the content (from the header `\id` to the end) and paste it into your Toolbox `Texts.txt` file.
 
